@@ -72,6 +72,7 @@ gitlab的安装以及汉化（http://www.cnblogs.com/yangliheng/p/5760185.html�
 	gitlab_rails['smtp_port'] = 25
 	#gitlab_rails['smtp_port'] = 465
 	gitlab_rails['smtp_user_name'] = "lbbniu@qq.com"
+	#QQ邮箱生产的专用收发邮件的密码
 	gitlab_rails['smtp_password'] = "123132151456"
 	gitlab_rails['smtp_domain'] = "smtp.qq.com"
 	gitlab_rails['smtp_authentication'] = "plain"
