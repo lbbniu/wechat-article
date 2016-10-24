@@ -1,3 +1,7 @@
+
+#gitlab与中已安装nginx冲突解决方案，使用自己安装的nginx
+
+	朋友今天遇到安装的gitlab中集成的nginx，与通过OneinStack提供的脚本安装的nginx冲突了，无法使用已经安装的nginx；gitlab中继承的nginx会替代已经安装的。和朋友简单连接情况之后就登录服务器查看该怎么解决，只用自己已经安装的nginx,朋友提供一下两个信息。
 ## 原来的程序配置 
 	OneinStack安装
 	/root/oneinstack/config/nginx.conf     
@@ -8,10 +12,13 @@
 	/var/opt/gitlab/nginx/conf/gitlab-http.conf          
 	gitlab设置端口的地方是这/etc/gitlab/gitlab.rb
 
+经过乱敲一桶命令之后，根据获取到的信息想到了解决方案，一下给出最终配置结果，中间经过很多了的测试总结出来的简单配置结果。希望对大家有帮助。
+
 ##nginx安装方式
-https://oneinstack.com/
+lnmp参考（https://oneinstack.com/）
 ##gitlab安装方式
-http://www.cnblogs.com/yangliheng/p/5760185.html
+
+gitlab的安装以及汉化（http://www.cnblogs.com/yangliheng/p/5760185.html）
 
 
 ###/opt/gitlab/service/nginx/run 文件
@@ -57,6 +64,7 @@ http://www.cnblogs.com/yangliheng/p/5760185.html
 ###干掉nginx gitlab 会自动启动新的nginx进程
 	killall nginx 
 
+配置好之后，朋友提供后台添加的账号和注册的账号都能收到邮件，经过在百度查找资料，多次尝试，得到一下配置
 ###gitlab邮箱配置
 	#/etc/gitlab/gitlab.rb 文件
 	gitlab_rails['smtp_enable'] = true
@@ -78,3 +86,6 @@ http://www.cnblogs.com/yangliheng/p/5760185.html
 	gitlab-ctl restart #重启
 	gitlab-ctl tail #查看是否有错误
 	
+
+
+
