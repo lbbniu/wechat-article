@@ -14,14 +14,15 @@
 
 经过乱敲一桶命令之后，根据获取到的信息想到了解决方案，一下给出最终配置结果，中间经过很多了的测试总结出来的简单配置结果。希望对大家有帮助。
 
-##nginx安装方式
+##使用自己安装的nginx方案1
+###1.nginx安装方式
 lnmp参考（https://oneinstack.com/）
-##gitlab安装方式
+###2.gitlab安装方式
 
 gitlab的安装以及汉化（http://www.cnblogs.com/yangliheng/p/5760185.html）
 
 
-###/opt/gitlab/service/nginx/run 文件
+###3./opt/gitlab/service/nginx/run 文件
 	
 	#源内容
 	#!/bin/sh
@@ -37,7 +38,7 @@ gitlab的安装以及汉化（http://www.cnblogs.com/yangliheng/p/5760185.html�
 	exec chpst -P /usr/local/nginx/sbin/nginx -p /usr/local/nginx
 		
 	
-###/var/opt/gitlab/nginx/conf/gitlab-http.conf 文件
+###4./var/opt/gitlab/nginx/conf/gitlab-http.conf 文件
 	#增加
 	log_format gitlab_access '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
 	log_format gitlab_ci_access '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
@@ -49,14 +50,14 @@ gitlab的安装以及汉化（http://www.cnblogs.com/yangliheng/p/5760185.html�
     #使用nginx -s reload 进行重启加载配置文件
   	
   	
-### /usr/local/nginx/conf/nginx.conf文件
+###5./usr/local/nginx/conf/nginx.conf文件
 	#配置文件开头加入
 	daemon off;	 #nginx不以守护进程方式运行
 	#在http配置段增加
 	include /var/opt/gitlab/nginx/conf/gitlab-http.conf;
 
 
-###修改目录权限
+###6.修改目录权限
 	cd /var/opt/gitlab && chgrp www gitlab-workhorse
 	cd /var/opt/gitlab/nginx chown -R www:www uwsgi_temp scgi_temp proxy_temp proxy_cache fastcgi_temp client_body_temp
 	cd /usr/local/nginx chown -R www:www uwsgi_temp scgi_temp proxy_temp proxy_cache fastcgi_temp client_body_temp
@@ -65,7 +66,7 @@ gitlab的安装以及汉化（http://www.cnblogs.com/yangliheng/p/5760185.html�
 	killall nginx 
 
 配置好之后，朋友提供后台添加的账号和注册的账号都能收到邮件，经过在百度查找资料，多次尝试，得到一下配置
-###gitlab邮箱配置
+###7.gitlab邮箱配置
 	#/etc/gitlab/gitlab.rb 文件
 	gitlab_rails['smtp_enable'] = true
 	gitlab_rails['smtp_address'] = "smtp.qq.com"
@@ -80,13 +81,18 @@ gitlab的安装以及汉化（http://www.cnblogs.com/yangliheng/p/5760185.html�
 	gitlab_rails['gitlab_email_from']='lbbniu@qq.com'
 	user['git_user_email'] = "lbbniu@qq.com"
 	
-###重启所有服务
+###8.重启所有服务
 	#为了保险期间，先停止后启动，或者直接重启服务
 	gitlab-ctl stop	 #停止服务
 	gitlab-ctl start #启动服务
 	gitlab-ctl restart #重启
 	gitlab-ctl tail #查看是否有错误
-	
-
-
+##使用自己安装的nginx方案2
+###1./etc/gitlab/gitlab.rb 文件
+	nginx['enable'] = false
+###2./usr/local/nginx/conf/nginx.conf文件
+首先配置方案1中的4步骤，然后进行下面配置即可，记得重新运行配置`gitlab-ctl reconfigure`和重启服务`gitlab-ctl restart`。
+	#在http配置段增加
+	include /var/opt/gitlab/nginx/conf/gitlab-http.conf;
+启动自己安装的nginx。
 
