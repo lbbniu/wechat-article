@@ -92,6 +92,7 @@ gitlab的安装以及汉化（http://www.cnblogs.com/yangliheng/p/5760185.html�
 	nginx['enable'] = false
 ###2./usr/local/nginx/conf/nginx.conf文件
 首先配置方案1中的4步骤，然后进行下面配置即可，记得重新运行配置`gitlab-ctl reconfigure`和重启服务`gitlab-ctl restart`。
+	
 	#在http配置段增加
 	include /var/opt/gitlab/nginx/conf/gitlab-http.conf;
 启动自己安装的nginx。
