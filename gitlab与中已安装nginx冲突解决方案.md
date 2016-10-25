@@ -1,7 +1,7 @@
 
 #gitlab与中已安装nginx冲突解决方案，使用自己安装的nginx
 
-	朋友今天遇到安装的gitlab中集成的nginx，与通过OneinStack提供的脚本安装的nginx冲突了，无法使用已经安装的nginx；gitlab中继承的nginx会替代已经安装的。和朋友简单连接情况之后就登录服务器查看该怎么解决，只用自己已经安装的nginx,朋友提供一下两个信息。
+	朋友今天遇到安装的gitlab中集成的nginx，与通过OneinStack提供的脚本安装的nginx冲突了，无法使用已经安装的nginx；gitlab中继承的nginx会替代已经安装的。和朋友简单了解情况之后就登录服务器查看该怎么解决，只用自己已经安装的nginx,朋友提供一下两个信息。
 ## 原来的程序配置 
 	OneinStack安装
 	/root/oneinstack/config/nginx.conf     
